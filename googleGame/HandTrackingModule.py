@@ -1,6 +1,7 @@
 import mediapipe as mp
 import time
 import cv2
+import numpy as np
 
 class handDedector:
     def __init__(self, mode=False, maxHands = 2, detectionCon = 0.5, trackCon = 0.5):
@@ -23,7 +24,7 @@ class handDedector:
                     self.mpDraw.draw_landmarks(img, handLms, self.mpHands.HAND_CONNECTIONS)
         return img
 
-    def findPositon(self, img, handNo=0, draw=False):
+    def findPositon(self, img, handNo=0, draw=True):
         lmList = []
         if self.results.multi_hand_landmarks:
             myHand = self.results.multi_hand_landmarks[handNo]
@@ -32,7 +33,9 @@ class handDedector:
                 cx, cy = int(lm.x*w), int(lm.y*h)
                 lmList.append([id, cx, cy])
                 if draw:
-                    cv2.circle(img, (cx, cy), 15, (255, 0, 255), cv2.FILLED)
+                    color_ = tuple(np.random.choice(range(256), size=3))
+                    r, g, b = np.random.randint(255), np.random.randint(255), np.random.randint(255)
+                    cv2.circle(img, (cx, cy), 3, (r, g, b), cv2.FILLED)
         return lmList
 
 
@@ -42,7 +45,7 @@ def main():
     while True:
         success, img = cap.read()
         img = detector.findHands(img)
-        lmList = detector.findPositon(img)
+        lmList = detector.findPositon(img, draw=True)
         cv2.imshow("Image", img)
         cv2.waitKey(1)
 
