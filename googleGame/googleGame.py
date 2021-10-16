@@ -3,7 +3,7 @@ import HandTrackingModule
 import pyautogui
 
 
-hm = HandTrackingModule.handDedector(maxHands=1)
+hm = HandTrackingModule.handDetector(maxHands=1)
 
 cap = cv2.VideoCapture(0)
 
@@ -28,7 +28,7 @@ while True:
     _, img = cap.read()
     img = cv2.flip(img, 1)
     img = hm.findHands(img, draw=False)
-    lmList = hm.findPositon(img)
+    lmList = hm.findPosition(img)
     if len(lmList) > 0:
         findDistance(lmList)
     cv2.imshow("Image", img)
