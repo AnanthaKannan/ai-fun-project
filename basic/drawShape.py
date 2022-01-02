@@ -35,6 +35,14 @@ circleColor = (255, 0, 0)
 circleThickness = 2
 cv2.circle(img, centerPoint, radios, circleColor, circleThickness)
 
+# poly linne
+points = np.array([[600, 700], [800, 600], [700, 300], [400, 300], [300, 500]])
+isClosed = True
+color = (255, 233, 255)
+thickness = 4
+cv2.polylines(img, [points], isClosed, color, thickness)
+
+
 "add text in image"
 text = "Open CV"
 txtOrigin = (300, 200)
